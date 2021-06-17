@@ -11,7 +11,7 @@ import tzlocal
 from os import get_terminal_size
 
 
-version = "1.0.0"
+version = "1.0.1"
 scan_version = "1.0"        # Increment these when making changes to
 analysis_version = "1.0"    # the structure of scans or analysis
 
@@ -397,7 +397,7 @@ def bar_chart(data, sort=False, width=50):
     label_length = len(max(data.keys(), key=lambda l: len(l)))
     items = sorted(data.items(), key=lambda x: x[1], reverse=True) if sort else data.items()
     for l, v in items:
-        size = round(v/max(data.values()) * width)
+        size = round(v/max(1, max(data.values())) * width)
         print(f"{l.rjust(label_length, ' ')}: {'▇' * size}{' ' if size else ''}{v}")
 
 def get_users_table(metrics, role_filter):
