@@ -11,7 +11,7 @@ import tzlocal
 from os import get_terminal_size
 
 
-version = "1.0.1"
+version = "1.0.2"
 scan_version = "1.0"        # Increment these when making changes to
 analysis_version = "1.0"    # the structure of scans or analysis
 
@@ -31,7 +31,7 @@ repeat_emoji = True
 legacy_replies = True
 timezone = str(tzlocal.get_localzone())
 
-emoji_re = re.compile(r"(?<=<:)\w+(?=:\d+>)|" + '|'.join(re.escape(e) for e in emoji.UNICODE_EMOJI['en'].keys()))
+emoji_re = re.compile(r"(?<=<:)[^:\s]+(?=:\d+>)|" + '|'.join(re.escape(e) for e in emoji.UNICODE_EMOJI['en'].keys()))
 
 user_metrics = ["Messages", "Characters\ntyped", "Characters\nper message", "Emoji\nused", "Top\nemoji", "Reactions", "Top\nreaction", "Top overall\nemoji", "Reactions\nreceived", "Top reaction\nreceived", "Mentions", "Times\nmentioned", "Replies", "Times\nreplied to", "Links", "Attachments", "Top attachment\ntype"]
 channel_metrics = ["Messages", "Top message\nsender", "Characters\ntyped", "Top character\ntyper", "Characters\nper message", "Emoji\nused", "Top\nemoji", "Reactions", "Top\nreaction", "Top overall\nemoji", "Mentions", "Top\nmentioner", "Top user\nmentioned", "Replies", "Top\nreplier", "Top\nreplied to", "Links", "Attachments", "Top attachment\ntype", "Top attachment\nsender", "Top link\nsender"]
@@ -207,7 +207,7 @@ async def scan_server(server, update=False):
             scan["channels"][id]["messages"].append({
                 "timestamp": str(message.created_at),
                 "author": message.author.name,
-                "content": re.sub(r"<(:\w+:)\d+>", r"\1", content),
+                "content": re.sub(r"<(:[^:\s]+:)\d+>", r"\1", content),
                 "emoji": re.findall(emoji_re, content),
                 "reactions": reactions,
                 "mentions": mentions,

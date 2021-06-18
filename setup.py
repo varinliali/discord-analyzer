@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="discord-analyzer",
-    version="1.0.0",
+    version="1.0.2",
     author="Rodrigo Palmeirim",
     author_email="rodrigohpalmeirim@hotmail.com",
     url="https://github.com/rodrigohpalmeirim/discord-analyzer",
